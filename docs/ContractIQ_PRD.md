@@ -411,7 +411,7 @@ The system is built as a single-tenant web application with a React frontend, a 
 | Frontend | React + Tailwind CSS | Team velocity; large ecosystem; PDF.js compatibility | Requires client-side state management for real-time chat |
 | File storage | Supabase Storage | Co-located with DB; signed URLs (1-hour expiry); no extra vendor | Bucket (`contracts`) and RLS policies must be created via SQL before first upload — use `INSERT INTO storage.buckets` and `CREATE POLICY ON storage.objects`; file path: `contracts/{user_id}/{contract_id}/{filename}.pdf`; Storage upload is non-blocking (failure only hides PDF viewer) |
 | PDF rendering | PDF.js (client-side) | No server load for rendering; handles page navigation and zoom | Heavy initial load for large PDFs; workaround: lazy-load pages |
-| Hosting | Vercel (frontend) + Supabase Edge Functions (backend) | Zero-config deployments; scales automatically | Cold start latency on Edge Functions (~300ms first call); acceptable given 30s extraction budget |
+| Hosting | Netlify (frontend) + Supabase Edge Functions (backend) | Zero-config deployments; scales automatically | Cold start latency on Edge Functions (~300ms first call); acceptable given 30s extraction budget |
 
 ---
 
@@ -554,7 +554,7 @@ ContractIQ treats hallucination — the model asserting something not in the con
 | Acceptable error rates | ≤ 12% of terms corrected by users in production; ≤ 5% hallucinated chat responses; 0% critical failures (data exposed to wrong user) |
 | Consequences of bad input | Corrupted PDF → graceful error message, no partial output stored. Non-contract document (e.g. invoice) → AI extracts what it can, confidence scores will be low, user sees ⚠️ warnings on most terms |
 | Recovery plan if system fails | OpenAI API failure: 3-retry with backoff, then surface error to user with "Try again" CTA; contract status set to `'error'` in DB so user can retry without re-uploading. Supabase downtime: frontend shows maintenance banner; no data loss risk as all writes are transactional |
-| How is system health monitored | Vercel deployment logs; Supabase dashboard for DB and storage metrics; OpenAI usage dashboard for token consumption and error rates; Uptime Robot for endpoint monitoring with alerts to team Slack |
+| How is system health monitored | Netlify deployment logs; Supabase dashboard for DB and storage metrics; OpenAI usage dashboard for token consumption and error rates; Uptime Robot for endpoint monitoring with alerts to team Slack |
 | Customer communication plan | P0 incident (data exposure, complete outage): in-app banner + email to all affected users within 1 hour; status page updated within 30 minutes. P1 incident (degraded performance): in-app banner within 2 hours |
 
 ---
@@ -567,7 +567,7 @@ ContractIQ treats hallucination — the model asserting something not in the con
 |---|---|
 | Supabase Pro setup (3 months during build) | $75 |
 | OpenAI API credits (development + testing — 2,000 test analyses) | $400 |
-| Vercel Pro (3 months during build) | $60 |
+| Netlify Pro (3 months during build) | $60 |
 | Domain + SSL | $20 |
 | Misc. tooling (Figma, Notion, GitHub) | $100 |
 | **Infrastructure subtotal** | **$655** |
@@ -589,7 +589,6 @@ ContractIQ treats hallucination — the model asserting something not in the con
 | Supabase Pro | $25 |
 | Supabase Storage add-on (estimated 5 GB/month PDF storage) | $0 (within Pro tier) |
 | OpenAI API usage (2,000 analyses × $0.15 avg) | $300 |
-| Vercel Pro (hosting + edge functions) | $20 |
 | Uptime monitoring | $10 |
 | **Total monthly operational** | **~$355** |
 
