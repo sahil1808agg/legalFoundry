@@ -1,0 +1,161 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* allNeurons Design System — primitive palette */
+    --color-grey-900: #070A0E;
+    --color-grey-800: #151719;
+    --color-grey-700: #25272B;
+    --color-grey-600: #2C2F32;
+    --color-grey-500: #4A4C4F;
+    --color-grey-400: #5E6062;
+    --color-grey-300: #8F9193;
+    --color-grey-200: #C1C2C3;
+    --color-grey-100: #DADADB;
+    --color-grey-50:  #F0F0F1;
+    --color-grey-25:  #FAFAFA;
+
+    --color-blue-900: #082A5E;
+    --color-blue-500: #115ACB;
+    --color-blue-50:  #E7EFFC;
+
+    --color-green-900: #084406;
+    --color-green-500: #13A10E;
+    --color-green-200: #92D490;
+    --color-green-50:  #E7F6E7;
+
+    --color-red-900: #581618;
+    --color-red-500: #D13438;
+    --color-red-200: #EAA2A3;
+    --color-red-50:  #FAEBEB;
+
+    --color-yellow-900: #854D00;
+    --color-yellow-500: #FFAA33;
+    --color-yellow-200: #FFE3BD;
+    --color-yellow-50:  #FFF9F0;
+
+    --color-violet-500: #7F00FF;
+    --color-violet-200: #E3C7FF;
+    --color-violet-50:  #F7F0FF;
+
+    /* Semantic tokens */
+    --text-primary:   var(--color-grey-900);
+    --text-secondary: var(--color-grey-500);
+    --bg-primary:     #FFFFFF;
+    --bg-surface:     var(--color-grey-25);
+    --bg-subtle:      var(--color-grey-50);
+    --brand:          var(--color-blue-500);
+  }
+
+  * {
+    box-sizing: border-box;
+    letter-spacing: 0;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: #FAFAFA;
+    color: #070A0E;
+    font-family: 'Inter Display', 'Inter', system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter Display', 'Inter', system-ui, sans-serif;
+    font-weight: 600;
+    color: #070A0E;
+  }
+}
+
+@layer components {
+  /* ── Buttons ─────────────────────────────────────── */
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-4 py-2 rounded-md
+           bg-[#115ACB] text-white font-medium text-sm
+           transition-colors duration-100
+           hover:bg-[#0D469E]
+           focus:outline-none focus:ring-2 focus:ring-[#115ACB] focus:ring-offset-2
+           disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-4 py-2 rounded-md
+           border border-[#DADADB] bg-white text-[#070A0E] font-medium text-sm
+           transition-colors duration-100
+           hover:bg-[#F0F0F1]
+           focus:outline-none focus:ring-2 focus:ring-[#115ACB] focus:ring-offset-2
+           disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center px-3 py-2 rounded-md
+           text-[#4A4C4F] font-medium text-sm
+           transition-colors duration-100
+           hover:bg-[#F0F0F1] hover:text-[#070A0E]
+           focus:outline-none focus:ring-2 focus:ring-[#115ACB] focus:ring-offset-2
+           disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+
+  /* ── Card ────────────────────────────────────────── */
+  .card {
+    @apply bg-white rounded-lg border border-[#DADADB] shadow-sm;
+  }
+
+  /* ── Input ───────────────────────────────────────── */
+  .input-base {
+    @apply w-full px-3 py-2 rounded-md border border-[#DADADB]
+           bg-white text-[#070A0E] text-sm
+           placeholder:text-[#8F9193]
+           focus:outline-none focus:ring-2 focus:ring-[#115ACB] focus:border-transparent
+           transition-shadow duration-100
+           disabled:bg-[#F0F0F1] disabled:cursor-not-allowed;
+  }
+
+  /* ── Badges (confidence + status) ───────────────── */
+  .badge-green {
+    @apply inline-flex items-center px-2 py-0.5 rounded text-xs font-medium
+           bg-[#E7F6E7] text-[#084406] border border-[#92D490];
+  }
+
+  .badge-amber {
+    @apply inline-flex items-center px-2 py-0.5 rounded text-xs font-medium
+           bg-[#FFF9F0] text-[#854D00] border border-[#FFE3BD];
+  }
+
+  .badge-red {
+    @apply inline-flex items-center px-2 py-0.5 rounded text-xs font-medium
+           bg-[#FAEBEB] text-[#581618] border border-[#EAA2A3];
+  }
+
+  .badge-violet {
+    @apply inline-flex items-center px-2 py-0.5 rounded text-xs font-medium
+           bg-[#F7F0FF] text-[#380070] border border-[#E3C7FF];
+  }
+
+  .badge-grey {
+    @apply inline-flex items-center px-2 py-0.5 rounded text-xs font-medium
+           bg-[#F0F0F1] text-[#4A4C4F] border border-[#DADADB];
+  }
+
+  /* ── Skeleton loader ─────────────────────────────── */
+  .skeleton {
+    @apply bg-[#F0F0F1] rounded animate-pulse;
+  }
+
+  /* ── Focus ring (keyboard navigation) ───────────── */
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-[#115ACB] focus:ring-offset-2;
+  }
+
+  /* ── Divider ─────────────────────────────────────── */
+  .divider {
+    @apply border-t border-[#F0F0F1];
+  }
+}
