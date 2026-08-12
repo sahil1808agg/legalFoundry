@@ -3,7 +3,7 @@ export const maxDuration = 60
 
 import { NextRequest, NextResponse }         from 'next/server'
 import { createClient }                      from '@/lib/supabase/server'
-import { azureClient }                       from '@/lib/azure'
+import { callAzureAgent }                    from '@/lib/azure'
 import { requireAuth }                       from '@/lib/security/authGuard'
 import { checkRateLimit }                    from '@/lib/security/rateLimiter'
 import { sanitizeForLLM }                    from '@/lib/security/promptInjectionGuard'
@@ -165,13 +165,7 @@ export async function POST(request: NextRequest) {
   // ── Call Azure agent ──────────────────────────────────────────────────────
   let reply: string
   try {
-    const response = await (azureClient.responses as any).create({
-      input: inputMessage,
-    })
-    reply =
-      response.output_text ??
-      response.output?.[0]?.content?.[0]?.text ??
-      'No response generated.'
+    reply = await callAzureAgent(inputMessage)
   } catch (err: unknown) {
     const detail = err instanceof Error ? err.message : String(err)
     console.error('Azure agent error:', detail)
