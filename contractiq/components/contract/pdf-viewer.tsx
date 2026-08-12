@@ -22,7 +22,7 @@ export function PDFViewer({ signedUrl, targetPage }: PDFViewerProps) {
     async function loadPDF() {
       try {
         const pdfjsLib = await import('pdfjs-dist')
-        pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`
+        pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs'
 
         const pdf = await pdfjsLib.getDocument(signedUrl).promise
         if (cancelled) return
