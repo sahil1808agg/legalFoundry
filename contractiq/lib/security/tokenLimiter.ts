@@ -2,9 +2,9 @@ import { NextResponse } from 'next/server'
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 export const MAX_FILE_SIZE_BYTES  = 10 * 1024 * 1024   // 10 MB
-export const MAX_PAGE_COUNT       = 20
-export const MAX_CONTRACT_TOKENS  = 15_000
-export const MAX_WORD_COUNT_MIN   = 100                 // below this = scanned PDF
+export const MAX_PAGE_COUNT       = 50
+export const MAX_CONTRACT_TOKENS  = 80_000
+export const MAX_WORD_COUNT_MIN   = 50                  // below this = scanned PDF
 export const MAX_MESSAGE_LENGTH   = 5_000               // characters per chat message
 export const MAX_CHAT_HISTORY     = parseInt(process.env.MAX_CHAT_HISTORY ?? '100', 10)
 

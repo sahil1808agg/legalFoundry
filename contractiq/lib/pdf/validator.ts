@@ -5,9 +5,9 @@ export interface ValidationResult {
   tokenCount?: number
 }
 
-const MAX_PAGES = 20
-const MIN_WORDS = 100
-const MAX_TOKENS = 15_000
+const MAX_PAGES  = 50
+const MIN_WORDS  = 50
+const MAX_TOKENS = 80_000
 
 export function validatePDF(text: string, pageCount: number): ValidationResult {
   if (pageCount > MAX_PAGES) {

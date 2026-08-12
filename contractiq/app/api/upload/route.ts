@@ -70,6 +70,7 @@ export async function POST(request: NextRequest) {
   const { text, pageCount } = extractionResult
   const validation = validatePDF(text, pageCount)
   if (!validation.valid) {
+    console.error('PDF validation failed:', validation.error, { pageCount, chars: text.length })
     return NextResponse.json({ error: validation.error }, { status: 422 })
   }
 
