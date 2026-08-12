@@ -2,11 +2,10 @@
 const nextConfig = {
   webpack: (config, { isServer }) => {
     if (isServer) {
-      // Stub browser-only modules that pdfjs-dist references on the server
+      // pdf-parse and pdfjs-dist reference canvas — stub it out on the server
       config.resolve.alias = {
         ...config.resolve.alias,
-        canvas:              false,
-        'canvas/types/index': false,
+        canvas: false,
       }
     }
     return config
