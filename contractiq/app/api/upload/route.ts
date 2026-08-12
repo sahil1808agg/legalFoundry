@@ -63,8 +63,9 @@ export async function POST(request: NextRequest) {
   try {
     extractionResult = await extractTextFromPDF(buffer)
   } catch (err) {
-    console.error('PDF extraction error:', err)
-    return NextResponse.json({ error: 'Failed to read PDF. The file may be corrupted.' }, { status: 422 })
+    const msg = err instanceof Error ? err.message : String(err)
+    console.error('PDF extraction error:', msg)
+    return NextResponse.json({ error: `PDF extraction failed: ${msg}` }, { status: 422 })
   }
 
   const { text, pageCount } = extractionResult

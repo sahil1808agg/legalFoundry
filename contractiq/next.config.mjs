@@ -2,13 +2,17 @@
 const nextConfig = {
   webpack: (config, { isServer }) => {
     if (isServer) {
-      // pdf-parse and pdfjs-dist reference canvas — stub it out on the server
       config.resolve.alias = {
         ...config.resolve.alias,
         canvas: false,
       }
     }
     return config
+  },
+  experimental: {
+    // Keep these as native node_modules — do not bundle through webpack.
+    // Netlify Functions includes all package.json dependencies at runtime.
+    serverComponentsExternalPackages: ['pdf-parse', 'pdfjs-dist'],
   },
 }
 
