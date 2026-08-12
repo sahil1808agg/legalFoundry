@@ -35,7 +35,7 @@ export function useChat({ contractId, initialMessages, initialSessionId }: UseCh
     setMessages(prev => [...prev, optimisticUser])
 
     abortRef.current = new AbortController()
-    const timeoutId  = setTimeout(() => abortRef.current?.abort(), 15_000)
+    const timeoutId  = setTimeout(() => abortRef.current?.abort(), 60_000)
 
     try {
       const res = await fetch('/api/chat', {
