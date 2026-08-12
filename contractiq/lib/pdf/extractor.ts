@@ -7,10 +7,16 @@ export interface ExtractionResult {
 }
 
 export async function extractTextFromPDF(buffer: ArrayBuffer): Promise<ExtractionResult> {
-  // Dynamic import keeps pdfjs-dist out of the client bundle
   const pdfjsLib = await import('pdfjs-dist/legacy/build/pdf.mjs')
 
-  const loadingTask = pdfjsLib.getDocument({ data: new Uint8Array(buffer) })
+  // Disable worker thread — required for serverless (Netlify Functions / Lambda)
+  pdfjsLib.GlobalWorkerOptions.workerSrc = ''
+
+  const loadingTask = pdfjsLib.getDocument({
+    data:            new Uint8Array(buffer),
+    useSystemFonts:  true,
+    isEvalSupported: false,
+  })
   const pdf = await loadingTask.promise
 
   const pageCount = pdf.numPages

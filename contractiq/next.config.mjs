@@ -2,13 +2,14 @@
 const nextConfig = {
   webpack: (config, { isServer }) => {
     if (isServer) {
-      // pdfjs-dist needs canvas on server — provide a no-op shim
-      config.resolve.alias.canvas = false
+      // Stub browser-only modules that pdfjs-dist references on the server
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        canvas:              false,
+        'canvas/types/index': false,
+      }
     }
     return config
-  },
-  experimental: {
-    serverComponentsExternalPackages: ['pdfjs-dist'],
   },
 }
 
